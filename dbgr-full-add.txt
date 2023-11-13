@@ -1,0 +1,8 @@
+What do I mean by a Dynamic Language?
+  One where I can add classes/methods/functions/variables dynamically
+  
+
+How do we get location range info? - 
+   compute begin token from end token on a LR shift.
+   On a reduce we record start/end.
+

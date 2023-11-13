@@ -1,0 +1,130 @@
+Some Desirable Features
+   
+   Support debugging outside process or computer (remote debugging)
+   Support easy development of the debugger
+      testable
+      debugging pieces of the debugger individually
+      debugging parts of the debugger while the debugger is in use
+
+   support command-line and IDE interaction
+   calling the debugger from the debugged program. 
+   a important special case is in a signal handler
+
+Run-time support
+
+   Stopping: 
+     Step, Step Over, Step Out, Breakpoints
+
+   Access to Frame Stack 
+     - to get position information
+        - source code position
+        - fucntion name and parameters
+     - for inspection of variables and parameters
+     - for evaluation in a particular frame
+
+-----------------------------------------------------
+The debuggers I have been working on all have a similar structure that
+I find works well.
+
+ - Interface
+ - Command Processor
+ - Commands/Subcommands
+
+Anatomy of a Debugger for a Dynamic Language
+--------------------------------------------
+
+Many debuggers for dynamic languages allow for stopping a running
+program for inspection of a profiler or debugger in the same way:
+there is a callback or hook mechanism which allows the debugger to
+register with the runtime a method to call when various events trigger
+[bash, zsh, ksh, perl, python, ruby].
+
+When a program is stopped inside a debugger, things are not that
+different from being in the programming language's an interactive
+shell (if it provides one). In fact many of the debuggers I've worked
+on allow going into the native shell from inside the debugger
+.(e.g. "irb" for Ruby, Python or This allows programmers to use the
+possibly familiar shell interface while also reducing the need of the
+debugger writer to provide some of the more involved facilities
+provided by the programming shell.
+
+Interface
+---------
+
+One mistake I've seen is to not to encapsulate debugger input and
+output [pdb]. When this happens there is a tempation to try to
+redirect I/O instantiating the main parts of the debugger and things
+become more kludgy in doing so.
+
+Instead to handle the different modes of debugging, I find it useful
+to have and "interface" class which encapsulates I/O.
+
+Some Examples of interfaces which I use:
+
+  * Debugger and interactive user are in the same process
+
+  * Similar to above but debugger is handling batch command processing
+
+  * Interactive user input but connection to debugger is outside of
+    the process that the user interaction process
+
+  * The other end of the above. Debugger is inside the process but
+    user is at the other end of an out-of-process connection
+
+  * Interface used in testing - for example simple array of command
+    inputs and array of string of output lines
+
+Interfaces also handle formatting I/O. For example if interaction
+is via a Web server I/O may be enclosed in XML tags.
+
+My interface classes handle I/O at a slightly higher-level than you
+might find for traditional I/O. For example some methods in the
+Interface class are prompting for user input, or prompting for
+confirmation before a dangerous action (which in script modes is
+preset to return either confirmation or denial). There may be special
+kinds of control input/output when the interface talks outside of the
+process, and here solitation for debugger command input may be
+separated from other kinds of (such as debugged program input) that
+may take place. 
+
+
+Command Processor, Commands and SubCommands
+-------------------------------------------
+
+The command processor mediates between the actual commands (or
+"view" of MVC) which might be in the form of a command-line interface
+or it could be XML input/output and the internal actions of the the
+debugger (analogous to the "model" of MVC).
+
+In some debuggers [perldb, pdb] each command is a method. However in
+Object-oriented languages it useful to make command be its own class,
+a subclass of a general command class. Doing this makes it simpler to
+associate commonly needed properties with the command such as help on
+the command, short help, what category of commands this command is in,
+and so on. Furthermore classing a command object facilitates making
+the command have subcommands -- that is commands that fall under the
+general category of a command. Some examples of commands which have
+subcommands in gdb-like debuggers are "info", "set" and "show".
+Subcommands of "info" include "program" (show information about the
+program debugged), "args" (argument variables of the current stack
+frame"). By the same token, making each subcommand be a class
+facilitates giving it properties and adding subcommands to the
+subcommand. 
+
+A last benefit of of making each command in its own class and putting
+a small number of these in a file is that it is easy to test
+individual commands in isolation.
+
+To collect commands, I put each command in its own file. In some
+debuggers [ruby-debug] group related commands like gdb "up" (move up a
+stack frame), and "down" (move down a stack frame) in a singe
+file. However I find it simpler just to have one command per
+file. These commands are collected in a "command" directory. Dynamic
+languages then can just load all files located in a directory. This
+also makes it possible to allow for user customization of commands via
+a user command directory which is separate from the debugger's base
+command directory. Likewise commands which require OS-specific or
+language-level-specific features can be grouped and isolated this way.
+
+
+

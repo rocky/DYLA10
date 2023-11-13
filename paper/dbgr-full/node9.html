@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Anatomy of a Debugger for a Dynamic Language</TITLE>
+<META NAME="description" CONTENT="The Anatomy of a Debugger for a Dynamic Language">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="dbgr-full.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html116"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html114"
+  HREF="dbgr-full.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html108"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html117"
+  HREF="node10.html">Interface</A>
+<B> Up:</B> <A NAME="tex2html115"
+  HREF="dbgr-full.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html109"
+  HREF="node8.html">Nested Debugging</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00030000000000000000">
+The Anatomy of a Debugger for a Dynamic Language</A>
+</H1>
+
+<P>
+The debuggers I have been working on all have a similar structure that
+I find works well. In Object-oriented debuggers for dynamic languages
+here are some of the major components:
+
+<P>
+
+<UL>
+<LI>Interface
+</LI>
+<LI>Command Processor
+</LI>
+<LI>Commands/Subcommands
+</LI>
+<LI>Trace Filtering
+</LI>
+<LI>Line Caching and Position Remapping
+</LI>
+</UL>
+
+<P>
+Each of these parts is described below. The last two items however are
+separate packages as they may be useful in other situations. For
+example Trace Filtering may also be used in a profiler while Line
+Caching and Position Remapping are useful for any source-code
+introspection tool. Both packages would be useful in a code-coverage
+tool.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html118"
+  HREF="node10.html">Interface</A>
+<LI><A NAME="tex2html119"
+  HREF="node11.html">Command Processor, Commands and SubCommands</A>
+<LI><A NAME="tex2html120"
+  HREF="node12.html">Trace Filtering</A>
+<LI><A NAME="tex2html121"
+  HREF="node13.html">Line Caching and Position Remapping</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

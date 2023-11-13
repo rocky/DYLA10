@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>High-level and low-level debugging</TITLE>
+<META NAME="description" CONTENT="High-level and low-level debugging">
+<META NAME="keywords" CONTENT="dbgr-position">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-position.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="dbgr-position.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html71"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html69"
+  HREF="dbgr-position.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html63"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html72"
+  HREF="node7.html">Demo material</A>
+<B> Up:</B> <A NAME="tex2html70"
+  HREF="dbgr-position.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html64"
+  HREF="node5.html">Breakpoint support</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00030000000000000000">
+High-level and low-level debugging</A>
+</H1>
+There is a dichotomy between high-level (language level) debuggers and
+low-level (VM instruction) debuggers. The popular debugger gdb is
+basically a low-level debugger that tries to add support for some
+high-level languages. Debuggers can also go the other way around, but
+they usually do not. Ruby and Python debuggers (other than the ones I
+have written) do not allow for VM or bytecode inspection. In one case
+where I requested more access to the lower-level structures, the VM
+writer resisted because of fear of giving low-level access to an
+average programmer. Debuggers in dynamic languages, then, are not seen
+as tools for the compiler writer, <SPAN  CLASS="textit">i.e.,</SPAN> for testing code generation
+or optimization techniques. This is yet another reason why support for
+debuggers in such languages is weak.
+
+<P>
+Similarly the debugger is not seen as a vehicle for allowing the
+programmer to understand what optimization and code improvements have
+been performed on the program. In Ruby, a compiler-option table is
+removed after compilation; it is not kept for dynamic inspection
+(although this may be fixed in a future release). And recursion
+elimination is turned off by default for fear that it would confuse
+programmers. Instead, adding a small amount of information to the
+object would allow a debugger to report such transformations when they
+occur, and I think that would be sufficient.
+
+<P>
+With gdb and gcc, programmers often debug optimized code, where
+sequential statements might be run in a different order from that
+given in the program. Unfortunately, code optimizers typically do not
+record information about the code motion performed on a program,
+although this would not be difficult, and it would help a programmer
+follow execution of the program.
+
+<P>
+Suppose that whenever an instruction is moved by a code optimizer,
+information indicating that the instruction is not in its original
+location is recorded alongside the instruction stream. Then whenever a
+debugger is stopped on that instruction, it could issue a
+warning. If the optimizer recorded that the code was moved ``up,'' the
+debugger would scan forward in the instruction sequence until a
+branching point for the first instruction that was not moved. This
+location could be reported as the current position, noting that an
+instruction from further down is about to be run. A similar procedure
+would apply if an instruction moved ``down,'' but scanning backward
+rather than forward.
+
+<P>
+This example brings up a question regarding the high-level
+<SPAN  CLASS="textit">vs.</SPAN> low level dichotomy: do we try to hide underlying
+mechanisms or to expose them? There is no one set answer. For code
+motion, the example above does both. Although programmers generally
+prefer to think of code in a higher-level way that matches the
+source-code, upon programmer's request, or when not enough information
+has been recorded to confidently present things in a higher-level way,
+the full low-level details should be available.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html71"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html69"
+  HREF="dbgr-position.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html63"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html72"
+  HREF="node7.html">Demo material</A>
+<B> Up:</B> <A NAME="tex2html70"
+  HREF="dbgr-position.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html64"
+  HREF="node5.html">Breakpoint support</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

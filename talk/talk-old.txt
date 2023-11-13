@@ -1,0 +1,85 @@
+Intro
+-------
+
+Thanks to the DYLA 10 for giving me a forum to express my views on the
+state of affairs on debugging and the opportunity share my thoughts as
+to how to structure a debugger
+
+If you go to DYLA conferences or conferences in general you'll notice
+I don't let alone give talks at them. So I apologize for my lack of
+polish in speaking and presentation abilities.
+
+The reason I go to conferences is generally get something done. I
+selected this conference because I hoped to reach language designers
+to alert them of things that can make writing debuggers easier and
+possibly offer help.
+
+When one considers debugging capabilities typically available on new
+programming languages as compared to those of language 30 year old,
+Smalltalk, it doesn't seem like the art is advancing. I keep thinking
+of the Chinese Dynasties where water clocks and large ships were
+invented only to have all of that technology forgotten when the Empire
+collapsed.
+
+It is not uncommon for people who learn Ruby as their first progamming
+language to not even know what a debugger is. And I've written
+debuggers in a number of programming languages where that debugger is
+the only one available. In Ruby all virtually all of the debuggers
+funnel through a single code base at one point or another. This is not
+a good sign. In evolution, when something like this happens as reflected in
+a species genetic diversity (as happens in cheetas), this generally
+means the species was almost extinct.
+
+Outline
+-------
+
+Here is how I hope to structure the time I have allotted:
+
+
+1. What Language Designers and Implementors should be aware of in
+order to support profiling/tracing/debugging and runtime
+introspection.
+
+2. Demo some neat features that debuggers don't typically do
+
+3. A code inspection of one of my debuggers
+
+
+-------- Multiline -----
+What to be aware of 
+
+1  Position info 
+   location 
+     range of positions (line, line/column)
+   container
+      type, name (e.g. file, filename, )
+
+2  Support for trace hook
+    breakpoints
+    step out, over, into
+
+3. Does source match?
+    capture source code or save a checksum
+ 
+-------- Multiline -----
+x='
+A multi-line 
+string
+'; y=2
+
+Python, Bash, early versions of Ruby; end line
+recent versions of Ruby, Perl, zsh
+
+-------- compound statements -----
+case "$1" in
+      0  ;;
+esac
+
+
+----
+Demo: 
+  eval string
+  eval fn - via set substitute
+
+
+

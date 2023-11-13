@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Demo material</TITLE>
+<META NAME="description" CONTENT="Demo material">
+<META NAME="keywords" CONTENT="dbgr-position">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-position.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="dbgr-position.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html81"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html79"
+  HREF="dbgr-position.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html73"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html82"
+  HREF="node8.html">About this document ...</A>
+<B> Up:</B> <A NAME="tex2html80"
+  HREF="dbgr-position.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html74"
+  HREF="node6.html">High-level and low-level debugging</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00040000000000000000">
+Demo material</A>
+</H1>
+
+<P>
+I would like to demonstrate some novel aspects of my debugger for Ruby
+1.9.
+
+<P>
+They include better position information for code generated
+dynamically (for example, from inside a Ruby program) or from a string
+inside a C method. I will show the difference between fast and
+traditional breakpoint support. Possibly I will implement some of the
+more novel aspects described above: recursion-elimination reporting
+and instruction code motion.
+
+<P>
+The debugger has been structured to make it easy to add
+commands--programmers can supply a directory of their own
+commands. Also, after having used it in a couple of dynamic languages,
+I think that the overall structure of the debugger is sound.
+
+<P>
+It is also easy to debug the debugger itself, either by inspecting
+debugger variables or by modifying the debugger while it is running. I
+often fix debugger bugs without leaving a debugger session that is
+currently debugging another program. This might make an interesting
+demonstration.
+
+<P>
+Although I'll be demonstrating on Ruby, I have written debuggers for
+other dynamic languages. My goal and motivation for submitting a
+proposal to this organization is to seek out developers of other
+high-level dynamic languages in order to facilitate good debugging
+tools.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html81"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html79"
+  HREF="dbgr-position.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html73"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html82"
+  HREF="node8.html">About this document ...</A>
+<B> Up:</B> <A NAME="tex2html80"
+  HREF="dbgr-position.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html74"
+  HREF="node6.html">High-level and low-level debugging</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

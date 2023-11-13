@@ -1,0 +1,18 @@
+Set monitor 800x600
+cd /src/git/rbdbgr-papers/DYLA10/talk
+emacs
+set font 12 point.
+M-x shell
+C-x C-f /src/external-vcs/rbdbgr/test/unit/test-disassemble.rb
+C-x C-f /src/external-vcs/rbdbgr/app/disassemble.rb
+C-x C-d /src/external-vcs/rbdbgr/processor/command
+C-x C-f /src/external-vcs/rbdbgr/processor/command/up.rb
+M-x load-library dbgr
+M-x shell
+rabbit -f --geom 800x600 talk.rd &
+cd /src/git/rbdbgr-papers/DYLA10/code
+
+
+
+
+

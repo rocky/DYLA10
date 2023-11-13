@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node2.html">
+<LINK REL="previous" HREF="dbgr-full.html">
+<LINK REL="up" HREF="dbgr-full.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html31"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html29"
+  HREF="dbgr-full.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html23"
+  HREF="dbgr-full.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html32"
+  HREF="node2.html">Run-time support</A>
+<B> Up:</B> <A NAME="tex2html30"
+  HREF="dbgr-full.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html24"
+  HREF="dbgr-full.html">Debuggers in Dynamic Languages</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00010000000000000000">
+Introduction</A>
+</H1>
+I have written debuggers for a number of dynamic
+languages&nbsp;[#!rdebug!#,#!bashdb!#,#!pydb!#,#!remake!#,#!pydbgr!#,#!rbdbgr!#,#!kshdb!#,#!zshdb!#]
+and have found that additional run-time support invariably needs to be
+added. Compare debugging capabilities typically available now with
+those Smalltalk, a language 30 years old&nbsp;[#!smalltalk!#].
+
+<P>
+It seems that the state of the art in debugging has been not been
+improving. The Integrated Development Environments (IDEs) are not
+worse, but the foundation that they have to interact with is. Test-
+and behavior-driven development, interactive shells, modular and
+functional programming, and proving programs correct are all valuable
+techniques which reduce the need for debuggers and debugging, but they
+do not eliminate it.
+
+<P>
+Practical support for debugging is often weak. Consider a typical
+systems administrator who may not be all that interested in
+programming languages and programming-language theory. When something
+goes wrong, he or she may have to troubleshoot and fix a complex,
+non-modular, untestable program written by someone else. And instead
+of having a simple, lightweight tool to diagnose the problem, there
+may be only a complex and heavyweight IDE that poses problems of its
+own.
+
+<P>
+At the other, theoretical, end of the spectrum there are authors and
+teachers of a particular programming language who devote much more
+time to the programming language's theory and design than to the
+mundane task of debugging an existing program. Consequently, in many
+reference manuals for popular dynamic programming languages like Ruby,
+Scala, or Python, there is only a little sketchy information on
+debuggers or debugging.
+
+<P>
+Perhaps such lack of interest in debuggers is partly because the
+debuggers are very weak, which is in turn because of the lack of
+support inside the language: a little bit of a bootstrapping
+problem. And perhaps lack of support partially stems from confusion
+about what is needed at run time, and about how to write a debugger in
+a modular, testable, and debuggable way--it is an unfortunate fact
+that many debuggers cannot debug themselves.
+
+<P>
+So, first I outline how to structure and write a modular
+debugger. Then I describe some of the support features commonly
+missing from programming languages. Many of these are not specific to
+debugging or dynamic languages; better error-location reporting is one
+of these.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html31"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html29"
+  HREF="dbgr-full.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html23"
+  HREF="dbgr-full.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html32"
+  HREF="node2.html">Run-time support</A>
+<B> Up:</B> <A NAME="tex2html30"
+  HREF="dbgr-full.html">Debuggers in Dynamic Languages</A>
+<B> Previous:</B> <A NAME="tex2html24"
+  HREF="dbgr-full.html">Debuggers in Dynamic Languages</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

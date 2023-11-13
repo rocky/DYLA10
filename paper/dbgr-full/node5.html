@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Support for stopping inside the debugged program</TITLE>
+<META NAME="description" CONTENT="Support for stopping inside the debugged program">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html75"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html73"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html69"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html76"
+  HREF="node6.html">Breakpoint support</A>
+<B> Up:</B> <A NAME="tex2html74"
+  HREF="node2.html">Run-time support</A>
+<B> Previous:</B> <A NAME="tex2html70"
+  HREF="node4.html">Information to verify that</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00023000000000000000">
+Support for stopping inside the debugged program</A>
+</H2>
+
+<P>
+Many dynamic languages provide debugging support via a trace mechanism
+which issues a callback to a hook. The debugger writer develops the
+hook in the language to be debugged and makes a call to register it.
+In this section, I give suggestions for run-time support to facilitate
+calling a trace hook inside the debugged program. From the
+programmer's perspective often this amounts to pausing execution
+inside program. However strictly speaking, the hook may decide to do
+other things and not pause. For example it may profile the code or
+save data about methods called. If the trace hook has to simulate some
+of the support listed below, the hook may decide not to stop.  Not all
+programming languages have all of the features listed below, although
+most have some of them.
+
+<P>
+In the most primitive form, when the runtime does not have a callback
+hook, debugging can be obtained by having the source program call the
+debugger or profiler hook. Sometimes the callback hook is performed by
+instrumenting the source code to add such calls.
+
+<P>
+But most dynamic languages have some support for issuing a callback to
+a user-supplied hook within the programming language. The hook gets
+called immediately before some run-time event, such as calling a
+procedure or running a language statement. Given this, it is possible
+to implement ``step over,'' ``step out,'' and breakpoints in the hook
+itself and that is what many debuggers, such as, pdb, pydb, pydbgr and
+rdebug, have to do. The greatest slowness is generally seen in
+handling breakpoints and ``step out.''
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html77"
+  HREF="node6.html">Breakpoint support</A>
+<LI><A NAME="tex2html78"
+  HREF="node7.html">Frame Support</A>
+<LI><A NAME="tex2html79"
+  HREF="node8.html">Nested Debugging</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html75"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html73"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html69"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html76"
+  HREF="node6.html">Breakpoint support</A>
+<B> Up:</B> <A NAME="tex2html74"
+  HREF="node2.html">Run-time support</A>
+<B> Previous:</B> <A NAME="tex2html70"
+  HREF="node4.html">Information to verify that</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,399 @@
+[slide 0]
+
+Hi - I am Rocky Bernstein.
+
+If you go to DYLA conferences or conferences in general, you'll notice
+I don't, let alone give talks at them. So I apologize for my lack of
+speaking and presentation abilities.
+
+  [slide outline]
+
+Thanks to DYLA 2010 for giving me an opportunity to express my views on
+the state of affairs on debugging, show off a debugger, and the
+opportunity share my thoughts as to how to structure a debugger. I
+will discuss two things today, shown in this outline.
+
+  [slide water clock]
+
+When one considers debugging capabilities typically available on newer
+programming languages as compared to those of the 30-year old language
+Smalltalk, which from reading papers I see a number of presenters
+use, it doesn't seem like the art is advancing. I keep thinking of
+the Chinese Dynasties where water clocks and large ships were invented
+only to have all of that technology forgotten when the Empire
+collapsed.
+
+  [position problem slide]
+
+The first part of the talk is about how poorly Languages describe
+positions and I will use one small example.
+
+How do current Dynamic languages handle showing the position inside
+evaluated strings?
+
+I will start off with Python because that's a popular dynamic
+language. However the problems we see here are by no means limited to
+Python. I will use as the means to display what is going on the Python
+debugger, pdb, since that comes distributed with Python. Therefore it
+is used a lot. If you have C Python installed, I invite you to try
+this on your computer as I do run here. The program I am running is
+called "eval.py".
+
+
+  [switch to emacs in shell with code]
+  [M-x pdb] eval.py
+  dbgr-track-mode
+  pydb
+
+The first thing that I find a little weird is that the location that
+is reported, is line 4. 
+
+  [highlight line 4]
+
+That's because this is the value of a variable for current parser line
+number when that statement was compiled. And it was created upon seeing
+the end of the statement, a newline here.
+
+Lest you think this feature is unique to Python, let me say that you
+get the same thing in Bash. Ditto for earlier versions of Ruby before
+I got that changed. If you have bash and bashdb installed, you can find
+this listed as eval.sh and try it.
+
+As I suggest in the paper, a modest improvement would be to give a
+range of lines, that is "the statement that starts at line 1 and goes
+to line 4". [highlight this]
+
+Of course when the range is a single line you don't have to give that
+extra verbiage. Even better would be to give line and column pairs.
+
+Now let me step into the exec. 
+ [step, step]. 
+
+Where are we? In angle-bracket "string" at line two.
+
+ [highlight <string>(2)]
+
+But can I list the text for that?  
+
+ [list]
+
+Nope.
+
+Let me show this is not really a function of the debugger, but of the
+Python system itself.  Let me run this Python program without a
+debugger:
+
+  M-x compile
+  python eval.py
+
+And now you see that the traceback reports
+
+  File "<string>", line 3
+  [highlight that]
+
+File "<string>"? It is what is inside that string that is what I need
+to know?
+
+
+Now let me switch to another programming language, and compare with
+the debugger I have been working on for Ruby, version 1.9. I have an
+advantage here because I can change the runtime when needed.
+
+  [M-x rbdbgr] eval.rb
+
+First note that I am now stopped at line 1 not line 4. Now we step
+  into the eval.  
+
+  [step; step]
+
+Notice this debugger allows me to step a little bit into the
+builtin-functions written in C. That's what the "CFUNC" and "C>"
+indicate. 
+ 
+  [highlight "CFUNC" and "C>"]
+
+CFUNC is the frame type and C> is the event that got me here.
+
+Note the string to evaluate is shown as a parameter. One more step
+
+  step
+
+and I am inside the eval proper. And I see inside the string. Let me
+try to list source lines here.
+
+  list
+
+When I show the traceback 
+
+  bt
+
+you see some small subtle differences. Instead of saying, "file
+<string>" we say "string and show the leading context of the string". 
+
+  [highlight "in string \nx=..."
+
+Again the debugger has access to the string eval'd because it is on
+the top of the call stack. So it picks up that value and creates a
+temporary file which is shown in this Emacs interface I use. 
+
+
+This example is an easy case that the debugger could figure out all on
+its own. Here is something more difficult and you see it used, for
+example, in the Ruby on Rails even in the lastest version 3. [In
+particular example add_observer! of activerecord].
+
+   [M-x rbdbgr] [eval-fn.rb]
+   step
+
+I'm going to step over the eval instead of go into it as before to skip
+over what we saw before which is not interesting here.
+
+   next
+
+If you know gdb, "next" is the same thing as step over, but "step
+over" works in this debugger as well.
+
+  step
+
+Notice we show here two locations, the location in eval and where that
+comes from. 
+
+   [Highlight "(eval):1 via ..."]
+
+I've cleverly rigged this example using a global variable so that I
+can get to the string inside the called function.
+
+   set substitute string . $x
+   frame 0
+
+frame 0 is a kind of hacky way to refresh the screen. "Set substitute"
+is a command that allows me to remap filenames as you might need if
+the program were the output of some sort of macro processor like erb
+or merb for Ruby on Rails.
+
+"list" now shows where we are:
+
+   list
+
+And step tracks inside:
+
+   step
+
+As before, a temporary file was created and the file name remapped.
+
+  [put cursor on *rbdbgr eval-fn]
+
+
+Vague position information is just one small but endemic problem one
+finds in newer programming languages. The paper describes some others;
+not all problems I mention are acknowledged as problems.
+
+  [Part II slide]
+
+But now I'd like to do something different and describe a little bit
+about how to organize and think about a debugger. 
+
+If you are writing a debugger from scratch, the first thing to do
+would be to forget about interactivity and just focus on writing
+something that traces execution of a program. Like set -x does for
+POSIX shells. 
+
+Many dynamic languages provide debugging support via a trace mechanism
+which issues a callback to a hook written in the high-level
+language. So all you do at first, is figure out how to write a hook to
+to print out values and get that hook registered.
+
+Here are some simple hooks for bash
+
+Python 
+
+  [python slide]
+
+and Ruby.
+
+  [Ruby slide]
+
+The hook for Ruby is perhaps the shortest. However note all of those
+parameters, "file, line, id, binding, classname"
+
+  [right-click graffiti-mode] underline file, binding...
+  
+However the interface for Python is the one I will be promoting at the
+next big Ruby event or "KAY EE GI" in Japan. 
+
+  p
+  underline "event, arg"
+
+The important thing here is that there is a frame object in Python
+which is currently lacking in Ruby.
+
+The next thing I want to remark on is that I am often surprised to
+find good programming practice not used in writing debuggers. So I am
+sorry if the following obvious, but it based seeing many badly-written
+debuggers, including some of my own.
+
+After writing that trace routine one can then write some sort of test
+of the callback mechanism.  In fact the test-driven development folks
+would have you write that first.
+
+In developing a debugger like any other piece of software, modularity
+is very helpful and unit or "white-box" tests will help ensure that
+you write modular code.
+
+The Ruby debugger contains about 150 files. But each one can be run
+independently and will show off something about that module or class
+that is in the file. Here let me pick one. 
+
+  [put away slide]
+
+  C-x b disassemble.rb [/src/external-vcs/rbdbgr/app/disassemble.rb]
+
+It is a module, or mixin in Ruby terminology.
+
+  [highlight "module"]
+  [Go to bottom]
+
+This file is just under 60 lines and at the bottom is the demo code,
+similar to a style you see in Mark Pilgrim's "Dive into Python".
+
+I can run it and it gives a live demo of what this file is about.
+
+  [M-x compile] ruby disassemble.rb
+ 
+You can see this module just annotates disassembly output with
+breakpoints and the position in the code.
+
+  [highlight '->' and 'B'
+
+The unit tests for this is pretty much an elaboration of the code that
+is run standalone:
+
+  [M-x compile] ../(test/unit/test-app-dis tab (assemble.rb)]
+
+If you were to inspect the code you'd see that the same strings are
+used in testing as in demo'ing.
+
+
+The noninteractive trace can help you test aspects of how to interrupt
+a running program. Now let me focus on what happens when the program
+is interrupted. 
+
+In some respects, when stopped inside a debugger it isn't all that
+different from going into a shell if your programming language
+provides one. For example for Ruby there is "irb". For Ruby on Rails
+there is "script/console". For Python there is "python" or
+"ipython". In fact in the debuggers I've written I allow you to go
+into those shells and I will show that later.
+
+The main difference is that there is some "context" set up, and an
+easy way to provided this is via a frame object. Recall that the
+Python trace interface used a frame object. 
+
+Let me show you a little bit of the Ruby frame object I am promoting.
+
+ C-x b *rbdbgr eval*
+ irb -d
+
+The -d option sets up some global variables so we can explicitly see
+them in the shell. 
+
+There is a method in the frame which uses the position container idea
+mentioned in the paper
+
+  >> $rbdbgr_frame.source_container
+  => ["string", "(eval)"]
+
+I will probably store the string in the container instead "(eval)".
+
+  >> $rbdbgr_frame.prev.source_container
+  => ["file", "/src/git/..."]
+
+If you read the paper, the other part of a position is a location:
+
+  >> $rbdbgr_frame.prev.source_location
+
+The source location is an array. Why? ....
+
+I may have line/column pair. Or in the presence of code optimization,
+multiple source locations may map to a single instruction location .
+
+
+So now I want to talk very briefly about structuring the commands for
+the debugger.
+
+It is tempting when first starting off to hard-code commands in some
+sort of case statement. 
+
+  [debug.rb slide]
+
+The debugger that comes with Ruby is like this. So are some of the
+POSIX shell debuggers. I am moving away from this style.
+
+  [pdb.rb slide]
+
+Using dynamic languages better, as you get more commands you might
+create a command class with each command a method. That's what the
+Python debugger pdb does via a command module
+
+  [rbdbgr slide]
+
+But even better though is have each command be its own class so it can
+have properties like help, or minimum abbreviation and so on. Then if
+you put each one in a separate file you can use the dynamic nature of
+the programming language and load all files in the directory.
+
+  [C-x b command]
+  [C-x 2]
+  [C-x b *rbdbgr tab]
+  help *
+
+I'll close by showing one of the commands and how one can use the
+dynamic nature of Ruby to change the debugger while inside the
+program. Here is the debugger "up" command:
+
+  [C-x b up]
+  [beginning of file]
+
+Here we see the help text which in Python you could do with a method
+docstring, but not so in Ruby. But what about "short help". Or the
+initial aliases for the command? These need more than just a method.
+
+  [go to end]
+
+As with the file for the disassemble module, this command is 80 or so
+lines.  It uses a mock class so I don't have to pull in all of the
+reset of the debugger.
+
+
+   [highlight that]
+
+
+and has some demo code which shows some of those class values.
+In method "foo" you can see me set up a frame.
+
+"run" is the method that gets called with the command is run. I'll
+change that to show that I can change this on the fly.
+
+   C-x C-b *rbdbgr -
+   up
+   down
+
+   C-x C-b up.rb
+   load '/src/external-vcs..."
+   up
+
+The debugger provides command aliases. But to debug into the command,
+I set up this macro "dbgcmd" which is a Ruby lambda or proc. I don't
+have a DSL stringing together in a programmatic way debugger commands.
+
+   show macro
+   show macro dbgcmd
+   set debug dbgr
+   dbgcmd up
+ENTERING NESTED DEBUGGER
+  ((eval $rbdbgr_...)
+
+   step until we get to "Hi folks"
+ 
+I'll stop here. More important are your questions.
+

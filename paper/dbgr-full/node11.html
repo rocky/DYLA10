@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Command Processor, Commands and SubCommands</TITLE>
+<META NAME="description" CONTENT="Command Processor, Commands and SubCommands">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node9.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html140"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html138"
+  HREF="node9.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html132"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html141"
+  HREF="node12.html">Trace Filtering</A>
+<B> Up:</B> <A NAME="tex2html139"
+  HREF="node9.html">The Anatomy of a</A>
+<B> Previous:</B> <A NAME="tex2html133"
+  HREF="node10.html">Interface</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00032000000000000000">
+Command Processor, Commands and SubCommands</A>
+</H2>
+
+<P>
+The command processor mediates between the actual commands (or
+``view'' of MVC) and the internal state of the debugger or run-time
+system (analogous to the ``model'' of MVC). This might be in the form
+of a command-line interface, or it might be XML.
+
+<P>
+In some debuggers, such as perldb or pdb, each command is a
+method. However in Object-oriented languages it is useful to make each
+command be its own class, a subclass of a general command class. Doing
+this makes it simpler to associate commonly needed properties with the
+command--help for the command, short help, what category of commands
+this command is in, and so on. Furthermore making each command its own
+class object facilitates making subcommands for the command. Some
+examples of commands which have subcommands in gdb-like debuggers are
+``info,'' ``set,'' and ``show.''  Subcommands of ``info'' include
+``program'' (show information about the program debugged), and
+``args'' (argument variables of the current stack frame). By the same
+token, making each subcommand be a class facilitates giving it
+properties and adding subcommands to the subcommand. A last benefit of
+making each command in its own class and putting a small number of
+these in a file is that it is easy to test individual commands in
+isolation.
+
+<P>
+To collect commands, I put each command in its own file. Some
+debuggers&nbsp;[#!rdebug!#] group related commands like gdb ``up'' (move
+up a stack frame), and ``down'' (move down a stack frame) in a single
+file. However I find it simpler just to have one command per
+file. These commands are collected in a ``command'' directory. Dynamic
+languages then can just load all the files located in a
+directory. This also makes it possible to allow for user customization
+of commands via a user command directory which is separate from the
+debugger's base command directory. Likewise commands which require
+OS-specific or language-level features can be grouped and
+isolated this way. Lastly if there is a bug in that command one can
+fix the file and reload it thereby fixing bugs in debugger commands
+without having to leave the debugger and redo context to get to the
+point where the bug is seen.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html140"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html138"
+  HREF="node9.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html132"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html141"
+  HREF="node12.html">Trace Filtering</A>
+<B> Up:</B> <A NAME="tex2html139"
+  HREF="node9.html">The Anatomy of a</A>
+<B> Previous:</B> <A NAME="tex2html133"
+  HREF="node10.html">Interface</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

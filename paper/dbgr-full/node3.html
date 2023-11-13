@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Position information</TITLE>
+<META NAME="description" CONTENT="Position information">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html57"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html55"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html49"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html58"
+  HREF="node4.html">Information to verify that</A>
+<B> Up:</B> <A NAME="tex2html56"
+  HREF="node2.html">Run-time support</A>
+<B> Previous:</B> <A NAME="tex2html50"
+  HREF="node2.html">Run-time support</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00021000000000000000">
+Position information</A>
+</H2>
+When a debugger is added to a programming language, invariably one of
+the first things noticed is that there are bugs in how the program
+reports source locations.
+
+<P>
+A common example: in languages that allow a statement to span several
+lines, the location line for the entire statement is recorded where
+the statement ends rather than where it starts. Generally this is
+because the location comes from the position information of the
+scanner (usually a global integer variable containing a line number)
+when the statement ended; saving information about where the statement
+started requires additional work. The best practice would be to give a
+range of locations telling where the statement starts and where it
+ends.
+
+<P>
+Programmers tend to tolerate, although they do not appreciate, some
+fuzziness when the programming language reports a fatal error in the
+program. However vagueness about whether the debugged program
+is stopped before or after a particular line of code cannot be
+tolerated in a debugger. A programmer has to be able to set a stopping
+point which is both precise and feels natural, that is, which matches his
+understanding of the source code rather than the machine's
+understanding of the object code.
+
+<P>
+I propose that the concept of ``position'' contains two parts: a
+container and a place within that container. These correspond roughly
+to the traditional ``file'' and ``line number.'' However, in dynamic
+languages the source code does not always come from a file. It can
+come from a program object (e.g., a string), or it can be a member of
+a package of files (e.g., Java jar, or Python egg). So a container
+should have the ability to refer to other containers. Position inside
+a container poses a number of other problems. One is that ``line'' is
+a bit vague. Perhaps a range of lines would be better, or possibly
+character offsets, or a range of line- and column-number pairs.
+
+<P>
+A second problem with reporting the position for a stopped location is
+that there may be many source-code positions that correspond to a
+stopped location.  With code optimization, such as
+common-subexpression elimination, a single VM or machine instruction
+could map to sets of positions in a source program.
+
+<P>
+There are various ways to solve this problem; for example, all the
+possible corresponding positions can be listed. The important point is
+that all the information about the positions within the containers
+must be preserved.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html57"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html55"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html49"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html58"
+  HREF="node4.html">Information to verify that</A>
+<B> Up:</B> <A NAME="tex2html56"
+  HREF="node2.html">Run-time support</A>
+<B> Previous:</B> <A NAME="tex2html50"
+  HREF="node2.html">Run-time support</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

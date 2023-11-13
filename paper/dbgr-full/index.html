@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Debuggers in Dynamic Languages</TITLE>
+<META NAME="description" CONTENT="Debuggers in Dynamic Languages">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html2"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html3"
+  HREF="node1.html">Introduction</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1 ALIGN="CENTER">Debuggers in Dynamic Languages</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>Rocky Bernstein</STRONG></P>
+</DIV>
+
+<P>
+
+<H3>Abstract:</H3>
+<DIV CLASS="ABSTRACT">
+I have written debuggers for a number of dynamic languages and found
+that additional run-time support invariably needs to be added. The
+state of the art in debugging has not been improving. The paucity of
+modular testable and debuggable debuggers (many debuggers cannot debug
+themselves, nor do they come with a test suite for verifying their
+correctness) is perhaps due to confusion about what is needed at run
+time and about how to organize a debugger.
+
+<P>
+So, I suggest a modular program structure for a debugger that I have
+been using.  However first, I describe some of the support features
+which are commonly missing. These are: (1) better position information
+for dynamically generated code, e.g., from a method defined by a
+string variable in a program or coming from a data structure
+representing some code; (2) verification that source code matches the
+object code; and (3) better, faster support for breakpoints, ``step
+over'' and ``step into.''
+
+<P>
+There is a dichotomy between high-level (language level) and low-level
+(VM instruction) debugging, but there does not need to be. The popular
+debugger gdb is basically a low-level debugger that tries to support
+some high-level languages. Debuggers can also go the other way around,
+but they usually do not. Typically Ruby and Python debuggers, other
+than the ones I have written, do not allow for VM or byte-code
+inspection. 
+
+<P>
+Therefore the debuggers are not seen as tools for the compiler writer,
+for example for testing code generation or optimization techniques;
+and this is another reason that support for them is not stronger. I
+believe that debuggers should also be able to debug optimized code as
+well as unoptimized code.
+</DIV>
+<P>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html4"
+  HREF="node1.html">Introduction</A>
+<LI><A NAME="tex2html5"
+  HREF="node2.html">Run-time support</A>
+<UL>
+<LI><A NAME="tex2html6"
+  HREF="node3.html">Position information</A>
+<LI><A NAME="tex2html7"
+  HREF="node4.html">Information to verify that source code matches object code</A>
+<LI><A NAME="tex2html8"
+  HREF="node5.html">Support for stopping inside the debugged program</A>
+<UL>
+<LI><A NAME="tex2html9"
+  HREF="node6.html">Breakpoint support</A>
+<LI><A NAME="tex2html10"
+  HREF="node7.html">Frame Support</A>
+<LI><A NAME="tex2html11"
+  HREF="node8.html">Nested Debugging</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html12"
+  HREF="node9.html">The Anatomy of a Debugger for a Dynamic Language</A>
+<UL>
+<LI><A NAME="tex2html13"
+  HREF="node10.html">Interface</A>
+<LI><A NAME="tex2html14"
+  HREF="node11.html">Command Processor, Commands and SubCommands</A>
+<LI><A NAME="tex2html15"
+  HREF="node12.html">Trace Filtering</A>
+<LI><A NAME="tex2html16"
+  HREF="node13.html">Line Caching and Position Remapping</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html17"
+  HREF="node14.html">Similarity between a Debugger and a Command Shell</A>
+<LI><A NAME="tex2html18"
+  HREF="node15.html">High-level and low-level debugging</A>
+<LI><A NAME="tex2html19"
+  HREF="node16.html">Summary</A>
+<LI><A NAME="tex2html20"
+  HREF="node17.html">Acknowledgments</A>
+<LI><A NAME="tex2html21"
+  HREF="node18.html">Bibliography</A>
+<LI><A NAME="tex2html22"
+  HREF="node19.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html3"
+  HREF="node1.html">Introduction</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

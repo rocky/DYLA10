@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Breakpoint support</TITLE>
+<META NAME="description" CONTENT="Breakpoint support">
+<META NAME="keywords" CONTENT="dbgr-full">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="dbgr-full.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html88"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html86"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html80"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html89"
+  HREF="node7.html">Frame Support</A>
+<B> Up:</B> <A NAME="tex2html87"
+  HREF="node5.html">Support for stopping inside</A>
+<B> Previous:</B> <A NAME="tex2html81"
+  HREF="node5.html">Support for stopping inside</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00023100000000000000">
+Breakpoint support</A>
+</H3>
+
+<P>
+Most dynamic languages that implement trace hooks, such as Python,
+POSIX shells, and Ruby, do not allow setting breakpoints inside the
+interpreter. A notable exception to this is Perl, ironic since it is
+one of the older languages. Given this, the hook code must look at
+location information and determine when a breakpoint has been
+encountered. Switching back and forth between running program and hook
+code, and the additional overhead of checking position information,
+are slow. When debugging a program slows it down, the debugger can not
+be used to find race-condition bugs. Furthermore, the programmer is
+discouraged from using a debugger, and then has to devise ways of
+circumventing flaws in the run-time debugging. A common workaround is
+to change the source code to put a call to the debugger where the
+programmer wants to stop. This allows the program to run at full speed
+until the point when the debugger is needed, making use of dynamic
+facility of the programming language to pull in code at any time.
+
+<P>
+However what is really needed is a way to register a stopping point
+inside the interpreter. Full support for handling conditions under
+which one needs to stop is not needed. Even support for one-time or
+temporary breakpoints is not necessary--that can all be done in the
+higher-level code outside of the interpreter. But some support inside
+the interpreter is extremely useful in order to handle breakpoints
+efficiently.
+
+<P>
+Here are some techniques for allowing for breakpoints inside an
+interpreter. One of the oldest techniques, used for example in IBM
+mainframe assembly code, is to patch over the instruction sequence
+with a ``trap'' instruction&nbsp;[#!rubinius!#]. One needs to store the
+overwritten instruction and simulate it when the trap is over. With a
+virtual machine, a similar and perhaps simpler way is to store a trap
+bit in the VM opcode. In my experimental Ruby 1.9 debugger, I allocate
+a parallel byte vector for each instruction sequence on demand where
+the programmer has set a breakpoint. I did this for simplicity of
+implementation, but it also has an advantage that since it does not
+change the instruction sequence, it allows for better security
+in checking for tampering with the code&nbsp;[#!grayhat!#].
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html88"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html86"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html80"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html89"
+  HREF="node7.html">Frame Support</A>
+<B> Up:</B> <A NAME="tex2html87"
+  HREF="node5.html">Support for stopping inside</A>
+<B> Previous:</B> <A NAME="tex2html81"
+  HREF="node5.html">Support for stopping inside</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+r
+2011-04-03
+</ADDRESS>
+</BODY>
+</HTML>

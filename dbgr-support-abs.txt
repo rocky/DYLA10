@@ -1,0 +1,7 @@
+I have written debuggers for a number of dynamic languages and found that additional run-time support invariably needs to be added. So, it seems as though the state of the art in debugging has not been getting better. The paucity of modular testable and debuggable debuggers (many debuggers cannot debug themselves) is perhaps due to confusion about what is needed at run time and about how to organize a debugger.
+
+My paper describes some of the support features that are commonly missing, and I will demonstrate these using a debugger for Ruby 1.9. These are: (1) better position information for dynamically generated code,  e.g., from a method defined by a string variable in a program or coming from a string inside a built-in C library method; (2) verification that source code matches the object code; and (3) better, faster breakpoint support.
+
+There is a dichotomy between high-level (language level) and low-level (VM instruction) debugging, but there does not need to be. The popular debugger gdb is basically a low-level debugger that tries to support some high-level languages. Debuggers can also go the other way around, but they usually do not. Typically Ruby and Python debuggers, other than the ones I have written, do not allow for VM or bytecode inspection.
+
+Therefore the debuggers are not seen as tools for the compiler writer, for example for testing code generation or optimization techniques; and this is another reason that support for such language debuggers is not stronger.
